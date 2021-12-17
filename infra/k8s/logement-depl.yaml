@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logement-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logement
+  template:
+    metadata:
+      labels:
+        app: logement
+    spec:
+      containers:
+        - name: logement
+          image: theodieppois/logement
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logement-srv
+spec:
+  selector:
+    app: logement
+  ports:
+    - name: logement
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

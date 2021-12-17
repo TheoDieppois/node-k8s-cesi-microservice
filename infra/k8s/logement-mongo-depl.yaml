@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logement-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logement-mongo
+  template:
+    metadata:
+      labels:
+        app: logement-mongo
+    spec:
+      containers:
+        - name: logement-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logement-mongo-srv
+spec:
+  selector:
+    app: logement-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
